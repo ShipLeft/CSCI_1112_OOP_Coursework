@@ -6,10 +6,23 @@ import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
 import javafx.scene.text.Text;
 
+/**
+ * <h1>ClockPane</h1>
+ *
+ * <p>This class will create the constructor of the clock object. This will also implement javafx
+ * to launch an application with the painted clock on it.</p>
+ *
+ * <p>Created: 11/03/2021</p>
+ *
+ * @author unknown, Rhett Boatright
+ */
 public class ClockPane extends Pane {
     private int hour;
     private int minute;
     private int second;
+    private boolean hourHandVisible;
+    private boolean minuteHandVisible;
+    private boolean secondHandVisible;
 
     /** Construct a default clock with the current time*/
     public ClockPane() {
@@ -85,36 +98,92 @@ public class ClockPane extends Pane {
         Text t2 = new Text(centerX - clockRadius + 3, centerY + 5, "9");
         Text t3 = new Text(centerX + clockRadius - 10, centerY + 3, "3");
         Text t4 = new Text(centerX - 3, centerY + clockRadius - 3, "6");
+        getChildren().clear();
+        getChildren().addAll(circle, t1, t2, t3, t4);
 
         // Draw second hand
-        double sLength = clockRadius * 0.8;
-        double secondX = centerX + sLength *
-                Math.sin(second * (2 * Math.PI / 60));
-        double secondY = centerY - sLength *
-                Math.cos(second * (2 * Math.PI / 60));
-        Line sLine = new Line(centerX, centerY, secondX, secondY);
-        sLine.setStroke(Color.RED);
+        if(secondHandVisible == true) {
+            double sLength = clockRadius * 0.8;
+            double secondX = centerX + sLength *
+                    Math.sin(second * (2 * Math.PI / 60));
+            double secondY = centerY - sLength *
+                    Math.cos(second * (2 * Math.PI / 60));
+            Line sLine = new Line(centerX, centerY, secondX, secondY);
+            sLine.setStroke(Color.RED);
+            getChildren().add(sLine);
+        }
 
         // Draw minute hand
-        double mLength = clockRadius * 0.65;
-        double xMinute = centerX + mLength *
-                Math.sin(minute * (2 * Math.PI / 60));
-        double minuteY = centerY - mLength *
-                Math.cos(minute * (2 * Math.PI / 60));
-        Line mLine = new Line(centerX, centerY, xMinute, minuteY);
-        mLine.setStroke(Color.BLUE);
+        if(minuteHandVisible == true) {
+            double mLength = clockRadius * 0.65;
+            double xMinute = centerX + mLength *
+                    Math.sin(minute * (2 * Math.PI / 60));
+            double minuteY = centerY - mLength *
+                    Math.cos(minute * (2 * Math.PI / 60));
+            Line mLine = new Line(centerX, centerY, xMinute, minuteY);
+            mLine.setStroke(Color.BLUE);
+            getChildren().add(mLine);
+        }
 
         // Draw hour hand
-        double hLength = clockRadius * 0.5;
-        double hourX = centerX + hLength *
-                Math.sin((hour % 12 + minute / 60.0) * (2 * Math.PI / 12));
-        double hourY = centerY - hLength *
-                Math.cos((hour % 12 + minute / 60.0) * (2 * Math.PI / 12));
-        Line hLine = new Line(centerX, centerY, hourX, hourY);
-        hLine.setStroke(Color.GREEN);
+        if(hourHandVisible == true) {
+            double hLength = clockRadius * 0.5;
+            double hourX = centerX + hLength *
+                    Math.sin((hour % 12 + minute / 60.0) * (2 * Math.PI / 12));
+            double hourY = centerY - hLength *
+                    Math.cos((hour % 12 + minute / 60.0) * (2 * Math.PI / 12));
+            Line hLine = new Line(centerX, centerY, hourX, hourY);
+            hLine.setStroke(Color.GREEN);
+            getChildren().add(hLine);
+        }
+    }
 
-        getChildren().clear();
-        getChildren().addAll(circle, t1, t2, t3, t4, sLine, mLine, hLine);
+    /**
+     * This class will return hourHandVisible.
+     * @return
+     */
+    public boolean isHourHandVisible(){
+        return hourHandVisible;
+    }
+
+    /**
+     * This class will set hourHandVisible.
+     * @param hourHandVisible (boolean; tells program weather or not to show hour hand)
+     */
+    public void setHourHandVisible(boolean hourHandVisible){
+        this.hourHandVisible = hourHandVisible;
+    }
+
+    /**
+     * This class will return minuteHandVisible.
+     * @return
+     */
+    public boolean isMinuteHandVisible() {
+        return minuteHandVisible;
+    }
+
+    /**
+     * This class will set hourHandVisible.
+     * @param minuteHandVisible (boolean; tells program weather or not to show minute hand)
+     */
+    public void setMinuteHandVisible(boolean minuteHandVisible) {
+        this.minuteHandVisible = minuteHandVisible;
+    }
+
+    /**
+     * This class will return secondHandVisible.
+     * @return
+     */
+    public boolean isSecondHandVisible() {
+        return secondHandVisible;
+    }
+
+    /**
+     * This class will set hourHandVisible.
+     * @param secondHandVisible (boolean; tells program weather or not to show second hand)
+     */
+    public void setSecondHandVisible(boolean secondHandVisible) {
+        this.secondHandVisible = secondHandVisible;
     }
 
     @Override
